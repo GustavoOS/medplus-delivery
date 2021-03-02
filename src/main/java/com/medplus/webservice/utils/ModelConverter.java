@@ -56,6 +56,7 @@ public class ModelConverter
         patientData.setId(patient.getId());
         patientData.setName(patient.getName());
         patientData.setBirth(patient.getBirth());
+        patientData.setIsFemale(patient.getIsFemale());
         List<ExamData> exams = patient.getExams() != null
                 ? patient.getExams().stream().map(this::convertExam).collect(Collectors.toList())
                 : Collections.emptyList();
