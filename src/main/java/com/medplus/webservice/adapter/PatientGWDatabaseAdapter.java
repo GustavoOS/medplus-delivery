@@ -20,7 +20,10 @@ public class PatientGWDatabaseAdapter extends UserGatewayCommonAdapter implement
 
     private final PatientRepository patientRepository;
 
-    public PatientGWDatabaseAdapter(PatientRepository patientRepository, AppointmentRepository appointmentRepository, ModelConverter converter) {
+    public PatientGWDatabaseAdapter(PatientRepository patientRepository,
+                                    AppointmentRepository appointmentRepository,
+                                    ModelConverter converter)
+    {
         super(appointmentRepository, converter);
         this.patientRepository = patientRepository;
     }
