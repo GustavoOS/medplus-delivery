@@ -1,0 +1,48 @@
+micronaut:
+  application:
+    name: medplus
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      redoc:
+        paths: classpath:META-INF/swagger/views/redoc
+        mapping: /redoc/**
+      rapidoc:
+        paths: classpath:META-INF/swagger/views/rapidoc
+        mapping: /rapidoc/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+
+jackson:
+    serialization:
+        writeDatesAsTimestamps: false
+
+datasources:
+  default:
+    url: ${JDBC_URL:`jdbc:mysql://localhost:3306/medplus?useTimezone=true&serverTimezone=UTC`}
+    username: root
+    password: admin
+    driverClassName: ${JDBC_DRIVER:com.mysql.jdbc.Driver}
+    dialect: MYSQL
+
+jpa:
+  default:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        hbm2ddl:
+          auto: update
+        show_sql: true
+    entity-scan:
+        packages: 'com.medplus.webservice'
+#  security:
+#    authentication: bearer
+#    token:
+#      jwt:
+#        signatures:
+#          secret:
+#            generator:
+#              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:N3Vwk2teQu1Vmu8jve1rY1y6CSb19q3lH5tew}"'
