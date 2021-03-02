@@ -1,0 +1,215 @@
+openapi: 3.0.1
+info:
+  title: MedPlusApi
+  version: "0.0"
+paths:
+  /appointment/book:
+    post:
+      operationId: book
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAppointmentRequest'
+        required: true
+      responses:
+        "200":
+          description: book 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+  /appointment/patient/cancel:
+    post:
+      operationId: cancelPatient
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAppointmentRequest'
+        required: true
+      responses:
+        "200":
+          description: cancelPatient 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+  /appointment/provider/cancel:
+    post:
+      operationId: cancelProvider
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAppointmentRequest'
+        required: true
+      responses:
+        "200":
+          description: cancelProvider 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+  /exam:
+    post:
+      operationId: addExam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExamRequest'
+        required: true
+      responses:
+        "200":
+          description: addExam 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+    delete:
+      operationId: removeExam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveExamRequest'
+        required: true
+      responses:
+        "200":
+          description: removeExam 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+  /patient/{patientId}:
+    get:
+      operationId: get
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: get 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+  /provider:
+    get:
+      operationId: getAll
+      parameters: []
+      responses:
+        "200":
+          description: getAll 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Provider'
+  /provider/search:
+    post:
+      operationId: post
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProviderFilterParameterImpl'
+        required: true
+      responses:
+        "200":
+          description: post 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+components:
+  schemas:
+    Appointment:
+      type: object
+      properties:
+        dateTime:
+          type: string
+          format: date-time
+        peerID:
+          type: string
+    CancelAppointmentRequest:
+      required:
+      - dateTime
+      - id
+      type: object
+      properties:
+        dateTime:
+          type: string
+          format: date-time
+        id:
+          type: string
+    Coordinate:
+      type: object
+    CreateAppointmentRequest:
+      type: object
+      properties:
+        dateTime:
+          type: string
+          format: date-time
+        patientID:
+          type: string
+        providerId:
+          type: string
+    CreateExamRequest:
+      type: object
+      properties:
+        examId:
+          type: string
+        patientId:
+          type: string
+        title:
+          type: string
+    Object:
+      type: object
+    Provider:
+      type: object
+      properties:
+        appointments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Appointment'
+        id:
+          type: string
+        local:
+          $ref: '#/components/schemas/Coordinate'
+        name:
+          type: string
+        socialMediaURL:
+          type: string
+        specialization:
+          type: string
+    ProviderFilterParameterImpl:
+      type: object
+      properties:
+        distance:
+          type: number
+          format: double
+        id:
+          type: string
+        reference:
+          $ref: '#/components/schemas/Coordinate'
+        specialization:
+          type: string
+    RemoveExamRequest:
+      type: object
+      properties:
+        examId:
+          type: string
+        patientId:
+          type: string
